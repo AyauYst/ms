@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -68,5 +69,18 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    public function redirectPath()
+    {
+        if(Auth::user()->role_id==1) $this->redirectTo ='/admin';
+        if(Auth::user()->role_id==2) $this->redirectTo ='/student';
+        if(Auth::user()->role_id==3) $this->redirectTo ='/teacher';
+
+        if (property_exists($this, 'redirectPath')) {
+            return $this->redirectPath;
+        }
+
+        return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home';
     }
 }
