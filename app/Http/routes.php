@@ -18,3 +18,14 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+
+Route::group(['middleware'=>'admin'], function()
+{
+    Route::get('/admin', function(){
+        return "admin";
+    });
+    Route::resource('/admin/students', 'Admin/StudentsController');
+});
+
+
