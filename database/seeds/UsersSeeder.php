@@ -33,5 +33,46 @@ class UsersSeeder extends Seeder
             'password' => Hash::make('123456'),
             'role_id' => 3
         ]);
+
+
+
+        DB::table('users')->insert([
+            'name' => $faker->name,
+            'email' => 'student2@gmail.com',
+            'password' => Hash::make('123456'),
+            'role_id' => 2
+        ]);
+        DB::table('users')->insert([
+            'name' => $faker->name,
+            'email' => 'student3@gmail.com',
+            'password' => Hash::make('123456'),
+            'role_id' => 2
+        ]);
+        DB::table('users')->insert([
+            'name' => $faker->name,
+            'email' => 'student4@gmail.com',
+            'password' => Hash::make('123456'),
+            'role_id' => 2
+        ]);
+
+
+        DB::table('users')->insert([
+            'name' => $faker->name,
+            'email' => 'teacher2@gmail.com',
+            'password' => Hash::make('123456'),
+            'role_id' => 3
+        ]);
+        DB::table('users')->insert([
+            'name' => $faker->name,
+            'email' => 'teacher3@gmail.com',
+            'password' => Hash::make('123456'),
+            'role_id' => 3
+        ]);
+        DB::table('users')->insert([
+            'name' => $faker->name,
+            'email' => 'teacher4@gmail.com',
+            'password' => Hash::make('123456'),
+            'role_id' => 3
+        ]);
     }
 }

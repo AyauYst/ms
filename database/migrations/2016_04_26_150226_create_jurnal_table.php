@@ -18,8 +18,8 @@ class CreateJurnalTable extends Migration
             $table->integer('subject_id');
             $table->dateTime('date');
             $table->integer('class_works');
-            $table->integer('home_works');
-            $table->integer('visits');
+            $table->boolean('home_works');
+            $table->boolean('visits');
             $table->string('comment');
         });
     }

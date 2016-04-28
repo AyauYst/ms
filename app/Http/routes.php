@@ -25,7 +25,8 @@ Route::group(['middleware'=>'admin'], function()
     Route::get('/admin', function(){
         return "admin";
     });
-    Route::resource('/admin/students', 'Admin/StudentsController');
+
+    Route::resource('/admin/students', 'Admin\StudentsController');//
 });
 
 

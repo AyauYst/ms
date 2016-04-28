@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Group;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -16,7 +18,7 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin/students.index')->with('users', Student::getStudents());
     }
 
     /**
@@ -26,7 +28,7 @@ class StudentsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin/students.create')->with('groups',Group::GetGroups());
     }
 
     /**
@@ -35,9 +37,31 @@ class StudentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Student $student)
     {
-        //
+        dd($request->all());
+        /*$validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email' => 'required|max:500',
+            'password' => 'required',
+            'group_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('tasks.create'))
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $task->user_id = Auth::user()->id;
+        $task->title = $request->input('title');
+        $task->description = $request->input('description');
+        $task->status_priority_id = $request->input('status_priority_id');
+        $task->date_end = $request->input('date_end');
+        $task->save();
+
+        return redirect(route('tasks.create'));*/
+
     }
 
     /**
