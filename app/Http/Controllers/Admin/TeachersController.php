@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Group;
-use App\Models\Group_Student;
-use App\Models\Student;
+use App\Models\Subject;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
 
-class StudentsController extends Controller
+class TeachersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +18,7 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        return view('admin/students.index')->with('users', Student::getStudents());
+        return view('admin/teachers.index')->with('users', Teacher::getTeachers());
     }
 
     /**
@@ -30,7 +28,7 @@ class StudentsController extends Controller
      */
     public function create()
     {
-        return view('admin/students.create')->with('groups',Group::GetGroups());
+       return view('admin/teachers.create')->with('subjects',Subject::GetSubjects());
     }
 
     /**
@@ -39,33 +37,10 @@ class StudentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,Student $student, Group_Student $group)
+    public function store(Request $request)
     {
-        //dd($request->all());
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
-            'email' => 'required|max:500',
-            'password' => 'required',
-            'group_id' => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            return redirect(route('admin/students.create'))
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-       // $student->role_id =2;
-        $student->name = $request->input('name');
-        $student->email = $request->input('email');
-        $student->password = $request->input('password');
-
-        $student->save();
-        $group->group_id = $request->input('group_id');
-        $group->save();
-
-        return redirect(route('admin/students.create'));
-
+        dd($request->all());
+     
     }
 
     /**

@@ -58,7 +58,17 @@
                                 <li><a href="{{route('admin.students.index')}}">Show all student</a></li>
                             </ul>
 
-                            </li>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="" class="dropdown-toggle"
+                               data-toggle="dropdown">Teacher<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{route('admin.teachers.create')}}">Create</a></li>
+                                <li><a href="{{route('admin.teachers.index')}}">Show all teachers</a></li>
+                            </ul>
+
+                        </li>
                     @endunless
                 </ul>
 
