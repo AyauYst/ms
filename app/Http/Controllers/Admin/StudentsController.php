@@ -20,7 +20,8 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        return view('admin/students.index')->with('users', Student::getStudents());
+        return view('admin/students.index')->
+        with('users', Student::getStudents());
     }
 
     /**
@@ -87,7 +88,8 @@ class StudentsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('admin/students.edit')
+            ->with('group', Group_Student::GetStudents());
     }
 
     /**
