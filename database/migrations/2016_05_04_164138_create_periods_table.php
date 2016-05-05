@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGroupsTable extends Migration
+class CreatePeriodsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,12 @@ class CreateGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('periods', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->integer('study_form_id');
+            $table->integer('lesson_number');
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
         });
     }
 
@@ -26,6 +28,6 @@ class CreateGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('groups');
+        Schema::drop('periods');
     }
 }

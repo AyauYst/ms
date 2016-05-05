@@ -12,19 +12,24 @@ class GroupsSeeder extends Seeder
     public function run()
     {
         DB::table('groups')->insert([
-            'name' => 'grp-1'
+            'name' => 'grp-1',
+            'study_form_id' => 1
         ]);
         DB::table('groups')->insert([
-            'name' => 'grp-2'
+            'name' => 'grp-2',
+            'study_form_id' => 2
         ]);
         DB::table('groups')->insert([
-            'name' => 'grp-3'
+            'name' => 'grp-3',
+            'study_form_id' => 1
         ]);
         DB::table('groups')->insert([
-            'name' => 'grp-4'
+            'name' => 'grp-4',
+            'study_form_id' => 2
         ]);
         DB::table('groups')->insert([
-            'name' => 'grp-5'
+            'name' => 'grp-5',
+            'study_form_id' => 1
         ]);
     }
 }

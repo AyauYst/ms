@@ -10,4 +10,9 @@ class Helper
             ->with('first_option',$first_option)
             ->with('attrs', $attrs);
     }
+    
+    public static function testSheduleView()
+    {
+        return view('_helpers.testSheduleView');
+    }
 }
