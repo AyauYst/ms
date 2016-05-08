@@ -6,84 +6,39 @@
     <div class="container">
         <h1>Shedule</h1>
 
-        <div class="panel panel-default col-md-2">
-                <div class="panel-heading text-center">Monday</div>
-                <table class="table">
-                    <tr><td>1</td><td>Математика</td></tr>
-                    <tr><td>2</td><td>qwe2</td></tr>
-                    <tr><td>3</td><td>qwe3</td></tr>
-                    <tr><td>4</td><td>qwe4</td></tr>
-                    <tr><td>5</td><td>qwe5</td></tr>
-                    <tr><td>6</td><td>qwe6</td></tr>
-                </table>
+
+        <div class="form-group">
+            <label>Select group</label>
+            {!! Helper::select(
+                $groups,
+                old('group_id'),
+                "Выберите группу",
+                ['class' => 'form-control', 'name' => 'group_id', 'id'=>'group_selector'])
+            !!}
+            <div>{{ $errors->first('group_id') }}</div>
         </div>
 
-        <div class="panel panel-default col-md-2">
-            <div class="panel-heading text-center">Tuesday</div>
-            <table class="table">
-                <tr><td>1</td><td>Математика</td></tr>
-                <tr><td>2</td><td>qwe2</td></tr>
-                <tr><td>3</td><td>qwe3</td></tr>
-                <tr><td>4</td><td>qwe4</td></tr>
-                <tr><td>5</td><td>qwe5</td></tr>
-                <tr><td>6</td><td>qwe6</td></tr>
-            </table>
+        <div class="form-group " id="weekDays">
+            <div class="panel panel-default">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#Mon">Понедельник</a></li>
+                    <li><a data-toggle="tab" href="#Tue">Вторник</a></li>
+                    <li><a data-toggle="tab" href="#Wed">Среда</a></li>
+                    <li><a data-toggle="tab" href="#Thu">Четверг</a></li>
+                    <li><a data-toggle="tab" href="#Fri">Пятница</a></li>
+                    <li><a data-toggle="tab" href="#Sat">Суббота</a></li>
+                    <li><a data-toggle="tab" href="#Sun">Воскресение</a></li>
+                </ul>
+                <div class="tab-content" id="result"></div>
+                <div  class="panel-footer" id="opPanel"></div>
+            </div>
         </div>
-        <div class="panel panel-default col-md-2">
-            <div class="panel-heading text-center">Wednesday</div>
-            <table class="table">
-                <tr><td>1</td><td>Математика</td></tr>
-                <tr><td>2</td><td>qwe2</td></tr>
-                <tr><td>3</td><td>qwe3</td></tr>
-                <tr><td>4</td><td>qwe4</td></tr>
-                <tr><td>5</td><td>qwe5</td></tr>
-                <tr><td>6</td><td>qwe6</td></tr>
-            </table>
-        </div>
-        <div class="panel panel-default col-md-2">
-            <div class="panel-heading text-center">Thursday</div>
-            <table class="table">
-                <tr><td>1</td><td>Математика</td></tr>
-                <tr><td>2</td><td>qwe2</td></tr>
-                <tr><td>3</td><td>qwe3</td></tr>
-                <tr><td>4</td><td>qwe4</td></tr>
-                <tr><td>5</td><td>qwe5</td></tr>
-                <tr><td>6</td><td>qwe6</td></tr>
-            </table>
-        </div>
-        <div class="panel panel-default col-md-2">
-            <div class="panel-heading text-center">Friday</div>
-            <table class="table">
-                <tr><td>1</td><td>Математика</td></tr>
-                <tr><td>2</td><td>qwe2</td></tr>
-                <tr><td>3</td><td>qwe3</td></tr>
-                <tr><td>4</td><td>qwe4</td></tr>
-                <tr><td>5</td><td>qwe5</td></tr>
-                <tr><td>6</td><td>qwe6</td></tr>
-            </table>
-        </div>
-        <div class="panel panel-default col-md-2">
-            <div class="panel-heading text-center">Saturday</div>
-            <table class="table">
-                <tr><td>1</td><td>Математика</td></tr>
-                <tr><td>2</td><td>qwe2</td></tr>
-                <tr><td>3</td><td>qwe3</td></tr>
-                <tr><td>4</td><td>qwe4</td></tr>
-                <tr><td>5</td><td>qwe5</td></tr>
-                <tr><td>6</td><td>qwe6</td></tr>
-            </table>
-        </div>
-        <div class="panel panel-default col-md-2">
-            <div class="panel-heading text-center">Sunday</div>
-            <table class="table">
-                <tr><td>1</td><td>Математика</td></tr>
-                <tr><td>2</td><td>qwe2</td></tr>
-                <tr><td>3</td><td>qwe3</td></tr>
-                <tr><td>4</td><td>qwe4</td></tr>
-                <tr><td>5</td><td>qwe5</td></tr>
-                <tr><td>6</td><td>qwe6</td></tr>
-            </table>
-        </div>
+
     </div>
+
+    <script src="{{ URL::asset('js/jquery-2.2.3.min.js') }}"></script>
+    <script src="{{ URL::asset('js/SheduleShowScript.js') }}"></script>
+
 @stop
+
 

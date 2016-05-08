@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Group;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -16,7 +18,7 @@ class SheduleController extends Controller
      */
     public function index()
     {
-        return view('admin/shedule.index');
+        return view('admin/shedule.index')->with('groups',Group::GetGroups());
     }
 
     /**
@@ -26,7 +28,8 @@ class SheduleController extends Controller
      */
     public function create()
     {
-        return view('admin/shedule.create');
+        return view('admin/shedule.create')
+            ->with('groups',Group::GetGroups());
     }
 
     /**
@@ -37,7 +40,12 @@ class SheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
+        /*
+         *  +валидация
+         *  +запись в бд нового расписания
+         *  +изменить актуальность старого
+         */
     }
 
     /**

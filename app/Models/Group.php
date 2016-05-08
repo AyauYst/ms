@@ -12,4 +12,9 @@ class Group extends Model
     {
         return self::all();
     }
+
+    public static function getStudyForm($group_id)
+    {
+        return self::where('id','=',$group_id)->value('study_form_id');
+    }
 }

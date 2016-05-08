@@ -12,4 +12,9 @@ class Subject extends Model
     {
         return self::all();
     }
+
+    public static function getSubject($SID)
+    {
+        return self::where('id', '=', $SID)->value('name');
+    }
 }
