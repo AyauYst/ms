@@ -20,8 +20,7 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        return view('admin/students.index')->
-        with('users', Student::getStudents());
+        return view('admin/students.index')->with('users', Student::getStudents());
     }
 
     /**
