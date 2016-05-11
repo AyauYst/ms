@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Subject;
+use App\Models\Subjects_Teacher;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 
@@ -37,10 +38,32 @@ class TeachersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Teacher $teacher, Subjects_Teacher $subjects_Teacher)
     {
-        dd($request->all());
-     
+      //  dd($request->all());
+/*
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:50',
+            'email' => 'required|unique',
+            'password' => 'required',
+            'subject_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('admin/teachers.create'))
+                ->withErrors($validator)
+                ->withInput();
+        }
+*/
+        $teacher->name =$request->input('name');
+        $teacher->email =$request->input('email');
+        $teacher->password =$request->input('password');
+        $teacher->role_id=3;
+        $subjects_Teacher->user_id;
+        $subjects_Teacher->subject_id =$request->input('subject_id');
+        $teacher->save();
+        $subjects_Teacher->save();
+
     }
 
     /**
