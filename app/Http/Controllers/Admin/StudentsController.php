@@ -51,7 +51,7 @@ class StudentsController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect(route('admin/students.create'))
+            return redirect(route('admin.students.create'))
                 ->withErrors($validator)
                 ->withInput();
         }

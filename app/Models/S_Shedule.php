@@ -16,4 +16,15 @@ class S_Shedule extends Model
             ->where('is_actual', '=', true)
             ->value('id');
     }
+
+    public static function getGroupIdBySSID($ssid)
+    {
+        return self::where('id', '=', $ssid)
+            ->value('group_id');
+    }
+
+    public static function getSheduleById($id)
+    {
+        return self::where('id', '=', $id)->get();
+    }
 }

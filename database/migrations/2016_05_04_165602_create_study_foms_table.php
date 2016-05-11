@@ -15,6 +15,7 @@ class CreateStudyFomsTable extends Migration
         Schema::create('study_forms', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->timestamps();
         });
     }
 

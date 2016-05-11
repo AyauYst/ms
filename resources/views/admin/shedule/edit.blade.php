@@ -1,21 +1,16 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'SheduleCreator')
+@section('pageTitle', 'SheduleEditor')
 
 @section('content')
     <div class="container">
-        <h1>SheduleCreator</h1>
-
-        <form method="post" action="{{route('admin.shedule.store')}}">
+        <h1>SheduleEditor</h1>
+        <form method="post" action="{{route("admin.shedule.update", $S_ID)}}">
+            <input type="hidden" name="_method" value="PUT">
             {!! csrf_field() !!}
             <div class="form-group">
-                <label>Select group</label>
-                {!! $GroupSelector or Helper::select(
-                    $groups,
-                    old('group_id'),
-                    "Выберите группу",
-                    ['class' => 'form-control', 'name' => 'group_id', 'id'=>'group_selector'])
-                !!}
+                <label>Group</label>
+                    {!! $GroupSelector !!}
                 <div>{{ $errors->first('group_id') }}</div>
             </div>
 
@@ -31,20 +26,21 @@
                         <li><a data-toggle="tab" href="#Sun">Воскресение</a></li>
                     </ul>
                     <div class="tab-content" id="result">
-                        {!! isset($SheduleTable)?$SheduleTable:null !!}
+                        {!! $SheduleTable !!}
                     </div>
+
                     @yield('ERR_')
+
                 </div>
             </div>
 
             <div class="form-group">
                 <div>{{ $errors->first() }}</div>
-                <button class="btn btn-success" name="submit" id="sbm">Create Shedule</button>
+                <button class="btn btn-success" name="submit" id="sbm">Update Shedule</button>
             </div>
         </form>
     </div>
 
     <script src="{{ URL::asset('js/jquery-2.2.3.min.js') }}"></script>
-    <script src="{{ URL::asset('js/SheduleConstructorScript.js') }}"></script>
 @stop
 

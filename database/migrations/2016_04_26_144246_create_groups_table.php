@@ -16,6 +16,7 @@ class CreateGroupsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('study_form_id');
+            $table->timestamps();
         });
     }
 

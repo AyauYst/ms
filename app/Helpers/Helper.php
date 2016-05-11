@@ -1,5 +1,11 @@
 <?php
 
+use \App\Models\Subject;
+use \App\Models\Shedule;
+use \App\Models\S_Shedule;
+use \App\Models\Periods;
+use \App\Models\Group;
+
 class Helper
 {
     public static function select($options = [], $selected = 1, $first_option = '', $attrs = [])
@@ -10,52 +16,116 @@ class Helper
             ->with('first_option',$first_option)
             ->with('attrs', $attrs);
     }
-    
-    public static function WeekDaysTable4CreateShedule($GID)
-    {
-        $subjects = \App\Models\Subject::GetSubjects();
-        $SELECTOR = self::select($subjects, old('subject_id'), "Выберите предмет",
-            ['class' => 'form-control subjSelector', 'name' => 'subject_id']);
 
-        return view('_helpers.WeekDaysTable')
-            ->with('subjects', $SELECTOR)
-            ->with('periods', self::getPeriodsArr($GID));
+    public static function getUsefulShedule($GID)
+    {
+        $UsefulShedule = [];
+
+        $shedule = Shedule::getShedule(S_Shedule::getActualSSID($GID));
+        foreach ($shedule as $sh)
+        {
+            if($sh['day_id']==1)
+                $UsefulShedule["Mon"][$sh['lesson_number']] = $sh['subject_id'];
+            else if($sh['day_id']==2)
+                $UsefulShedule["Tue"][$sh['lesson_number']] = $sh['subject_id'];
+            else if($sh['day_id']==3)
+                $UsefulShedule["Wed"][$sh['lesson_number']] = $sh['subject_id'];
+            else if($sh['day_id']==4)
+                $UsefulShedule["Thu"][$sh['lesson_number']] = $sh['subject_id'];
+            else if($sh['day_id']==5)
+                $UsefulShedule["Fri"][$sh['lesson_number']] = $sh['subject_id'];
+            else if($sh['day_id']==6)
+                $UsefulShedule["Sat"][$sh['lesson_number']] = $sh['subject_id'];
+            else if($sh['day_id']==7)
+                $UsefulShedule["Sun"][$sh['lesson_number']] = $sh['subject_id'];
+        }
+
+        if(!isset($UsefulShedule) || count($UsefulShedule)!==7)
+        {
+            if(!isset($UsefulShedule["Mon"])) for($i=1;$i<7;$i++)$UsefulShedule["Mon"][$i] = "";
+            if(!isset($UsefulShedule["Tue"])) for($i=1;$i<7;$i++)$UsefulShedule["Tue"][$i] = "";
+            if(!isset($UsefulShedule["Wed"])) for($i=1;$i<7;$i++)$UsefulShedule["Wed"][$i] = "";
+            if(!isset($UsefulShedule["Thu"])) for($i=1;$i<7;$i++)$UsefulShedule["Thu"][$i] = "";
+            if(!isset($UsefulShedule["Fri"])) for($i=1;$i<7;$i++)$UsefulShedule["Fri"][$i] = "";
+            if(!isset($UsefulShedule["Sat"])) for($i=1;$i<7;$i++)$UsefulShedule["Sat"][$i] = "";
+            if(!isset($UsefulShedule["Sun"])) for($i=1;$i<7;$i++)$UsefulShedule["Sun"][$i] = "";
+        }
+        return $UsefulShedule;
     }
 
-    public static function WeekDaysTable4ShowShedule($SHEDULE, $GID)
+    public static function WeekDaysTable4CreateShedule($GID, $ErrorMSG = null)
     {
-        $subjects = \App\Models\Subject::GetSubjects();
+        $subjects = Subject::GetSubjects();
+
         $SELECTORS = [];
 
         for($i=1; $i<7; $i++)
         {
-            $SELECTORS['Monday'][$i] = self::select($subjects, $SHEDULE['Mon'][$i], "Нет занятия",
-                ['class' => 'form-control subjSelector', 'name' => "Mon".$i."_subj_selector", 'disabled' => true]);
-            $SELECTORS['Tuesday'][$i] = self::select($subjects, $SHEDULE['Tue'][$i], "Нет занятия",
-                ['class' => 'form-control subjSelector', 'name' => "Tue".$i."_subj_selector", 'disabled' => true]);
-            $SELECTORS['Wednesday'][$i] = self::select($subjects, $SHEDULE['Mon'][$i], "Нет занятия",
-                ['class' => 'form-control subjSelector', 'name' => "Wed".$i."_subj_selector", 'disabled' => true]);
-            $SELECTORS['Thursday'][$i] = self::select($subjects, $SHEDULE['Thu'][$i], "Нет занятия",
-                ['class' => 'form-control subjSelector', 'name' => "Thu".$i."_subj_selector", 'disabled' => true]);
-            $SELECTORS['Friday'][$i] = self::select($subjects, $SHEDULE['Fri'][$i], "Нет занятия",
-                ['class' => 'form-control subjSelector', 'name' => "Fri".$i."_subj_selector", 'disabled' => true]);
-            $SELECTORS['Saturday'][$i] = self::select($subjects, $SHEDULE['Sat'][$i], "Нет занятия",
-                ['class' => 'form-control subjSelector', 'name' => "Sat".$i."_subj_selector", 'disabled' => true]);
-            $SELECTORS['Sunday'][$i] = self::select($subjects, $SHEDULE['Sun'][$i], "Нет занятия",
-                ['class' => 'form-control subjSelector', 'name' => "Sun".$i."_subj_selector", 'disabled' => true]);
-
-
+            $SELECTORS['Monday'][$i] = self::select($subjects, 0, "Выберите предмет",
+                ['class' => 'form-control subjSelector', 'name' => "Mon|".$i]);
+            $SELECTORS['Tuesday'][$i] = self::select($subjects, 0, "Выберите предмет",
+                ['class' => 'form-control subjSelector', 'name' => "Tue|".$i]);
+            $SELECTORS['Wednesday'][$i] = self::select($subjects,0, "Выберите предмет",
+                ['class' => 'form-control subjSelector', 'name' => "Wed|".$i]);
+            $SELECTORS['Thursday'][$i] = self::select($subjects, 0, "Выберите предмет",
+                ['class' => 'form-control subjSelector', 'name' => "Thu|".$i]);
+            $SELECTORS['Friday'][$i] = self::select($subjects, 0, "Выберите предмет",
+                ['class' => 'form-control subjSelector', 'name' => "Fri|".$i]);
+            $SELECTORS['Saturday'][$i] = self::select($subjects, 0, "Выберите предмет",
+                ['class' => 'form-control subjSelector', 'name' => "Sat|".$i]);
+            $SELECTORS['Sunday'][$i] = self::select($subjects, 0, "Выберите предмет",
+                ['class' => 'form-control subjSelector', 'name' => "Sun|".$i]);
         }
 
         return view('_helpers.WeekDaysTable')
             ->with('subjects', $SELECTORS)
             ->with('periods', self::getPeriodsArr($GID))
-            ->with('shedule_id', \App\Models\S_Shedule::getActualSSID($GID));
+            ->with('ErrorMSG', $ErrorMSG);
+    }
+
+    public static function WeekDaysTable4ShowShedule($GID, $selectMode = false, $ErrorMSG = null)
+    {
+        $SHEDULE = self::getUsefulShedule($GID);
+        $FirstOption = $selectMode?"Выберите предмет":"Нет занятия";
+        $disableAttr = $selectMode?[]:['disabled' => ''];
+
+        $subjects = Subject::GetSubjects();
+        $SELECTORS = [];
+
+        for($i=1; $i<7; $i++)
+        {
+            $SELECTORS['Monday'][$i] = self::select($subjects, $SHEDULE['Mon'][$i], $FirstOption,
+                array_merge(['class' => 'form-control subjSelector', 'name' => "Mon|".$i],$disableAttr));
+            $SELECTORS['Tuesday'][$i] = self::select($subjects, $SHEDULE['Tue'][$i], $FirstOption,
+                array_merge(['class' => 'form-control subjSelector', 'name' => "Tue|".$i],$disableAttr));
+            $SELECTORS['Wednesday'][$i] = self::select($subjects, $SHEDULE['Wed'][$i], $FirstOption,
+                array_merge(['class' => 'form-control subjSelector', 'name' => "Wed|".$i],$disableAttr));
+            $SELECTORS['Thursday'][$i] = self::select($subjects, $SHEDULE['Thu'][$i], $FirstOption,
+                array_merge(['class' => 'form-control subjSelector', 'name' => "Thu|".$i],$disableAttr));
+            $SELECTORS['Friday'][$i] = self::select($subjects, $SHEDULE['Fri'][$i], $FirstOption,
+                array_merge(['class' => 'form-control subjSelector', 'name' => "Fri|".$i],$disableAttr));
+            $SELECTORS['Saturday'][$i] = self::select($subjects, $SHEDULE['Sat'][$i], $FirstOption,
+                array_merge(['class' => 'form-control subjSelector', 'name' => "Sat|".$i],$disableAttr));
+            $SELECTORS['Sunday'][$i] = self::select($subjects, $SHEDULE['Sun'][$i], $FirstOption,
+                array_merge(['class' => 'form-control subjSelector', 'name' => "Sun|".$i],$disableAttr));
+        }
+
+
+        if($selectMode)
+            return view('_helpers.WeekDaysTable')
+                ->with('subjects', $SELECTORS)
+                ->with('periods', self::getPeriodsArr($GID))
+                ->with('ErrorMSG', $ErrorMSG);
+        return view('_helpers.WeekDaysTable')
+            ->with('subjects', $SELECTORS)
+            ->with('periods', self::getPeriodsArr($GID))
+            ->with('shedule_id', S_Shedule::getActualSSID($GID))
+            ->with('ErrorMSG', $ErrorMSG);
     }
 
     private static function getPeriodsArr($GID)
     {
-        $periods = \App\Models\Periods::getPeriods(\App\Models\Group::getStudyForm($GID));
+        $periods = Periods::getPeriods(Group::getStudyForm($GID));
         $PERIODS = [];
 
         foreach ($periods as $period)

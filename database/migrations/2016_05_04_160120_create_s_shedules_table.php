@@ -16,6 +16,7 @@ class CreateSShedulesTable extends Migration
             $table->increments('id');
             $table->integer('group_id');
             $table->boolean('is_actual');
+            $table->timestamps();
         });
     }
 

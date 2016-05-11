@@ -16,6 +16,7 @@ class CreateSubjectsTeachersTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('subject_id');
+            $table->timestamps();
         });
     }
 

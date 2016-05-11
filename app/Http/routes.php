@@ -31,9 +31,7 @@ Route::group(['middleware'=>'admin'], function()
     Route::resource('/admin/teachers', 'Admin\TeachersController');//
 
     Route::resource('/admin/shedule', 'Admin\SheduleController');
-
-
-
+    
 
     Route::post('admin/shedule4SelectedGroup/{GID}', 'Admin\AdminController@ShowShedule');
     Route::post('admin/shedule/getData4CreateShedule/{GID}', 'Admin\AdminController@data4CreateShedule');
