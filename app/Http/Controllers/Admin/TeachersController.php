@@ -59,9 +59,9 @@ class TeachersController extends Controller
         $teacher->email =$request->input('email');
         $teacher->password =$request->input('password');
         $teacher->role_id=3;
-        $subjects_Teacher->user_id;
-        $subjects_Teacher->subject_id =$request->input('subject_id');
         $teacher->save();
+        $subjects_Teacher->subject_id =$request->input('subject_id');
+        $subjects_Teacher->user_id=$teacher->id;
         $subjects_Teacher->save();
 
     }
