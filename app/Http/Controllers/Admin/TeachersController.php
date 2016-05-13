@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Hash;
 use App\Models\Subject;
 use App\Models\Subjects_Teacher;
 use App\Models\Teacher;
@@ -9,6 +10,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+
 
 class TeachersController extends Controller
 {
@@ -41,20 +44,21 @@ class TeachersController extends Controller
     public function store(Request $request, Teacher $teacher, Subjects_Teacher $subjects_Teacher)
     {
       //  dd($request->all());
-/*
+
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:50',
-            'email' => 'required|unique',
-            'password' => 'required',
-            'subject_id' => 'required'
+            'name' => 'required|max:50|alpha',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed|min:6',
+          //  'con_password' => 'required|min:6',
+            'subject_id'=> 'required'
         ]);
 
         if ($validator->fails()) {
-            return redirect(route('admin/teachers.create'))
+            return redirect(route('admin.teachers.create'))
                 ->withErrors($validator)
                 ->withInput();
         }
-*/
+
         $teacher->name =$request->input('name');
         $teacher->email =$request->input('email');
         $teacher->password =$request->input('password');
@@ -63,6 +67,8 @@ class TeachersController extends Controller
         $subjects_Teacher->subject_id =$request->input('subject_id');
         $subjects_Teacher->user_id=$teacher->id;
         $subjects_Teacher->save();
+
+        return redirect(route('admin.teachers.create'));
 
     }
 
@@ -85,7 +91,8 @@ class TeachersController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('admin.teachers.edit')
+            ->with('subjects',Subject::GetSubjects());
     }
 
     /**

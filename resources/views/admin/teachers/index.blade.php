@@ -13,8 +13,8 @@
                             {{ $teacher->name }}
                         </div>
                         <div class="col-md-2 text-right">
-                            <a href="#">  <i class="fa fa-edit" style="font-size:24px"></i></a>
-                            <a href="#">  <i class="fa fa-remove" style="font-size:24px;color:red"></i></a>
+                            <a href="{{route('admin.teachers.edit',$teacher->id)}}">  <i class="fa fa-edit" style="font-size:24px"></i></a>
+                            <a href="{{route('admin.teachers.destroy',$teacher->id)}}">  <i class="fa fa-remove" style="font-size:24px;color:red"></i></a>
                     </div>
                 </div>
                 <div class="panel-body">
