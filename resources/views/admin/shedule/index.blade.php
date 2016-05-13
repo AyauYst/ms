@@ -6,16 +6,20 @@
     <div class="container">
         <h1>Shedule</h1>
 
+        <form method="post" action="" id="QueryForm">
+            <input type="hidden" name="_method" value="" id="METHOD">
+            {!! csrf_field() !!}
+        </form>
 
         <div class="form-group">
             <label>Select group</label>
             {!! Helper::select(
                 $groups,
-                old('group_id'),
+                old('group_Id'),
                 "Выберите группу",
-                ['class' => 'form-control', 'name' => 'group_id', 'id'=>'group_selector'])
+                ['class' => 'form-control', 'name' => 'group_Id', 'id'=>'group_selector'])
             !!}
-            <div>{{ $errors->first('group_id') }}</div>
+            <div>{{ $errors->first('group_Id') }}</div>
         </div>
 
         <div class="form-group " id="weekDays">
@@ -30,6 +34,7 @@
                     <li><a data-toggle="tab" href="#Sun">Воскресение</a></li>
                 </ul>
                 <div class="tab-content" id="result"></div>
+
                 <div  class="panel-footer" id="opPanel"></div>
             </div>
         </div>

@@ -17,7 +17,8 @@ class CreateShedulesTable extends Migration
             $table->integer('s_shedules_id');
             $table->integer('day_id');
             $table->integer('subject_id');
-            $table->integer('lesson_number');//this->lesson_number == periods->lesson_number && periods->study_form_id == myGroup->study_form_id
+            $table->integer('lesson_number');
+            $table->timestamps();
         });
     }
 

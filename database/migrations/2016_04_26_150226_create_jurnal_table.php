@@ -21,6 +21,7 @@ class CreateJurnalTable extends Migration
             $table->boolean('home_works');
             $table->boolean('visits');
             $table->string('comment');
+            $table->timestamps();
         });
     }
 

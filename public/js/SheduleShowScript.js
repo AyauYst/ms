@@ -8,40 +8,47 @@ $(function ()
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 
 
-    if (sel.val() == "") {
+    if (sel.val() == "")
         wd.hide();
-    }
-    else {
+    else
         wd.show();
-    }
 
     sel.change(function ()
     {
-        chek_option(this,result);
-    });
-
-    function chek_option(item,rez_container)
-    {
+        opP.empty();
+        wd.fadeOut();
         var group_id = sel.val();
         if(group_id!="")
         {
-            wd.hide();
             $.post(
                 'shedule4SelectedGroup/'+group_id,
                 function(response)
                 {
+
                     result.html(response);
-                    var link = document.getElementById('EditLink');
-                    opP.html(link);
+
+                    var b_GRP = document.getElementById('btnGROUP');
+                    opP.html(b_GRP);
+                    wd.fadeIn(1000);
                 },
                 'html'
             );
-            wd.show();
         }
-        else
-        {
-            wd.hide();
-        }
-    }
+    });
+
+
 });
 
+function D_BTN_Click()
+{
+    document.getElementById('QueryForm').setAttribute('action', document.getElementById('DeleteLink').getAttribute('href'));
+    document.getElementById('METHOD').setAttribute('value', 'DELETE');
+    document.forms["QueryForm"].submit();
+}
+
+function E_BTN_Click()
+{
+    document.getElementById('QueryForm').setAttribute('action', document.getElementById('EditLink').getAttribute('href'));
+    document.getElementById('METHOD').setAttribute('value', 'GET');
+    document.forms["QueryForm"].submit();
+}

@@ -16,6 +16,7 @@ class CreateGroupStudentsTable extends Migration
             $table->increments('id');
             $table->integer('group_id');
             $table->integer('student_id');
+            $table->timestamps();
         });
     }
 
