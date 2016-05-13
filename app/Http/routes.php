@@ -28,7 +28,9 @@ Route::group(['middleware'=>'admin'], function()
 
     Route::resource('/admin/students', 'Admin\StudentsController');
 
-    Route::resource('/admin/teachers', 'Admin\TeachersController');//
+    Route::resource('/admin/teachers', 'Admin\TeachersController');
+
+    Route::get('/admin/teachers/{index}','Admin\AdminController@delete');
 
     Route::resource('/admin/shedule', 'Admin\SheduleController');
 

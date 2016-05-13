@@ -29,12 +29,12 @@
                                     <input type="password" class="form-control" name="password" value="{{old('password')}}">
                                     <div>{{ $errors->first('password') }}</div>
                                 </div>
-                                <!--  <div class="form-group">
+                                <div class="form-group">
                                     <label>Confirm Password</label>
                                     <input type="password" class="form-control" name="con_password">
                                     <div>{{ $errors->first('password') }}</div>
                                 </div>
-                                -->
+
 
                                 <div class="form-group">
                                     <label>Select subject</label>

@@ -48,8 +48,8 @@ class TeachersController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50|alpha',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:6',
-          //  'con_password' => 'required|min:6',
+            'password' => 'required|min:6',
+         // 'con_password' => 'required|min:6',
             'subject_id'=> 'required'
         ]);
 
@@ -61,7 +61,7 @@ class TeachersController extends Controller
 
         $teacher->name =$request->input('name');
         $teacher->email =$request->input('email');
-        $teacher->password =$request->input('password');
+        $teacher->password =Hash::make($request->input('password'));
         $teacher->role_id=3;
         $teacher->save();
         $subjects_Teacher->subject_id =$request->input('subject_id');
@@ -92,6 +92,7 @@ class TeachersController extends Controller
     public function edit($id)
     {
         return view('admin.teachers.edit')
+            ->with('teacher', Teacher::getTeacherById($id))
             ->with('subjects',Subject::GetSubjects());
     }
 
@@ -102,9 +103,32 @@ class TeachersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$id, Teacher $teacher, Subjects_Teacher $subjects_Teacher)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:50|alpha',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            // 'con_password' => 'required|min:6',
+            'subject_id'=> 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('admin.teachers.edit',$id))
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $teacher->name =$request->input('name');
+        $teacher->email =$request->input('email');
+        $teacher->password =Hash::make($request->input('password'));
+        $teacher->role_id=3;
+        $teacher->save();
+        $subjects_Teacher->subject_id =$request->input('subject_id');
+        $subjects_Teacher->user_id=$teacher->id;
+        $subjects_Teacher->save();
+
+        return redirect(route('admin.teachers.index'));
     }
 
     /**
@@ -115,6 +139,7 @@ class TeachersController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
+
 }

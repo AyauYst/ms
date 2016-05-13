@@ -12,6 +12,7 @@
                     <div class="panel-body">
                         <div class="col-md-6">
                             <form action="{{route('admin.teachers.update', $teacher->id)}}" method="post">
+                                <input type="hidden" name="_method" value="PUT">
                                 {{csrf_field()}}
                                 <div class="form-group">
                                     <label>FIO</label>

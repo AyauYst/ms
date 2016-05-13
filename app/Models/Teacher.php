@@ -15,6 +15,10 @@ class Teacher extends Model
 
     public static function getTeacherById($id)
     {
-        return self::where('user_id', '=', $id)->andWhere('role_id','=',3)->firstOrFail();
+        return self::where('id', '=', $id)->Where('role_id','=',3)->firstOrFail();
+    }
+    public static function deleteById($id)
+    {
+        return self::where('id', '=', $id)->delete();
     }
 }

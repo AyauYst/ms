@@ -7,6 +7,7 @@ use App\Models\Periods;
 use App\Models\S_Shedule;
 use App\Models\Shedule;
 use App\Models\Subject;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -14,6 +15,13 @@ use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
+    public function delete($id)
+    {
+        Teacher::deleteById($id);
+        return view('admin/teachers.index')->with('users', Teacher::getTeachers());
+
+    }
+
     public function data4CreateShedule($GID)
     {
         $VIEW = \Helper::WeekDaysTable4CreateShedule($GID);
