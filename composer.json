@@ -26,8 +26,7 @@
     },
     "autoload-dev": {
         "classmap": [
-            "tests/TestCase.php",
-            "app/Helpers/A_CharSet.php"
+            "tests/TestCase.php"
         ]
     },
     "scripts": {

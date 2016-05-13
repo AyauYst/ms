@@ -137,4 +137,10 @@ class Helper
 
         return $PERIODS;
     }
+
+
+
+    public static function AdminMenu(){ return view('_helpers.menu.AdminMenu'); }
+    public static function StudentMenu(){ return view('_helpers.menu.StudentMenu'); }
+    public static function TeacherMenu(){ return view('_helpers.menu.TeacherMenu'); }
 }
