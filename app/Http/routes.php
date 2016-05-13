@@ -42,3 +42,16 @@ Route::group(['middleware'=>'admin'], function()
 });
 
 
+Route::group(['middleware'=>'admin'], function()
+{
+
+    Route::get('/student', 'HomeController@index');
+
+});
+
+Route::group(['middleware'=>'teacher'], function()
+{
+
+    Route::get('/teacher', 'HomeController@index');
+
+});
