@@ -92,8 +92,8 @@ class TeachersController extends Controller
     public function edit($id)
     {
         return view('admin.teachers.edit')
-            ->with('teacher', Teacher::getTeacherById($id))
-            ->with('subjects',Subject::GetSubjects());
+        ->with('teacher', Teacher::getTeacherById($id))
+        ->with('subjects',Subject::GetSubjects());
     }
 
     /**
