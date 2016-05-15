@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+
 use Helper;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -10,6 +12,13 @@ use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
+    public function delete($id)
+    {
+        Teacher::deleteById($id);
+        return view('admin/teachers.index')->with('users', Teacher::getTeachers());
+
+    }
+
     public function data4CreateShedule($GID)
     {
         $VIEW = Helper::WeekDaysTable4CreateShedule($GID);

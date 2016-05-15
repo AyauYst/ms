@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Group_Student extends Model
+class Subjects_Teacher extends Model
 {
-    protected $table='groups_students';
+    protected $table ='subjects_teachers';
     public $timestamps = false;
 
-    public static  function GetStudents()
+    public static function getTeachers()
     {
         return self::all();
     }

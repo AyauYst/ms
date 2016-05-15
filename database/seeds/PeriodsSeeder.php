@@ -13,8 +13,8 @@ class PeriodsSeeder extends Seeder
     {
         $S_T = new DateTime();
         $E_T = new DateTime();
-        
-        
+
+
         DB::table('periods')->insert([
             'study_form_id' => 1,
             'lesson_number' => 1,

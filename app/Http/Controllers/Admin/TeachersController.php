@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Hash;
 use App\Models\Subject;
+use App\Models\Subjects_Teacher;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+
 
 class TeachersController extends Controller
 {
@@ -37,10 +41,35 @@ class TeachersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Teacher $teacher, Subjects_Teacher $subjects_Teacher)
     {
-        dd($request->all());
-     
+      //  dd($request->all());
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:50|alpha',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+         // 'con_password' => 'required|min:6',
+            'subject_id'=> 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('admin.teachers.create'))
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $teacher->name =$request->input('name');
+        $teacher->email =$request->input('email');
+        $teacher->password =Hash::make($request->input('password'));
+        $teacher->role_id=3;
+        $teacher->save();
+        $subjects_Teacher->subject_id =$request->input('subject_id');
+        $subjects_Teacher->user_id=$teacher->id;
+        $subjects_Teacher->save();
+
+        return redirect(route('admin.teachers.create'));
+
     }
 
     /**
@@ -62,7 +91,9 @@ class TeachersController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('admin.teachers.edit')
+        ->with('teacher', Teacher::getTeacherById($id))
+        ->with('subjects',Subject::GetSubjects());
     }
 
     /**
@@ -72,9 +103,32 @@ class TeachersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$id, Teacher $teacher, Subjects_Teacher $subjects_Teacher)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:50|alpha',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            // 'con_password' => 'required|min:6',
+            'subject_id'=> 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('admin.teachers.edit',$id))
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $teacher->name =$request->input('name');
+        $teacher->email =$request->input('email');
+        $teacher->password =Hash::make($request->input('password'));
+        $teacher->role_id=3;
+        $teacher->save();
+        $subjects_Teacher->subject_id =$request->input('subject_id');
+        $subjects_Teacher->user_id=$teacher->id;
+        $subjects_Teacher->save();
+
+        return redirect(route('admin.teachers.index'));
     }
 
     /**
@@ -85,6 +139,7 @@ class TeachersController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
+
 }

@@ -15,6 +15,7 @@ class Student extends Model
 
     public static function getStudentById($id)
     {
-        return self::where('user_id', '=', $id)->andWhere('role_id','=',2)->firstOrFail();
+        return self::where('id', '=', $id)->Where('role_id','=',2)->firstOrFail();
+      
     }
 }

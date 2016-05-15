@@ -6,6 +6,7 @@ use App\Models\Group;
 use App\Models\Group_Student;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Hash;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -20,8 +21,7 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        return view('admin/students.index')->
-        with('users', Student::getStudents());
+        return view('admin/students.index')->with('users', Student::getStudents());
     }
 
     /**
@@ -42,12 +42,11 @@ class StudentsController extends Controller
      */
     public function store(Request $request,Student $student, Group_Student $group)
     {
-        //dd($request->all());
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
-            'email' => 'required|max:500',
-            'password' => 'required',
-            'group_id' => 'required'
+            'name' => 'required|max:50|alpha',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            'group_id'=> 'required'
         ]);
 
         if ($validator->fails()) {
@@ -56,17 +55,17 @@ class StudentsController extends Controller
                 ->withInput();
         }
 
-       // $student->role_id =2;
-        $student->name = $request->input('name');
-        $student->email = $request->input('email');
-        $student->password = $request->input('password');
-
+        $student->name =$request->input('name');
+        $student->email =$request->input('email');
+        $student->password =Hash::make($request->input('password'));
+        $student->role_id=2;
         $student->save();
+
+        $group->student_id=$student->id;
         $group->group_id = $request->input('group_id');
         $group->save();
 
-        return redirect(route('admin/students.create'));
-
+        return redirect(route('admin.students.create'));
     }
 
     /**
@@ -88,8 +87,11 @@ class StudentsController extends Controller
      */
     public function edit($id)
     {
-        return view('admin/students.edit')
-            ->with('group', Group_Student::GetStudents());
+        return view('admin.students.edit')
+            ->with('student', Student::getStudentById($id))
+            ->with('group', Group::GetGroups());
+
+
     }
 
     /**
@@ -99,9 +101,32 @@ class StudentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id,Student $student, Group_Student $group)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:50|alpha',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            'group_id'=> 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('admin.students.edit'))
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $student->name =$request->input('name');
+        $student->email =$request->input('email');
+        $student->password =Hash::make($request->input('password'));
+        $student->role_id=2;
+        $student->save();
+
+        $group->student_id=$student->id;
+        $group->group_id = $request->input('group_id');
+        $group->save();
+
+        return redirect(route('admin.students.index'));
     }
 
     /**
