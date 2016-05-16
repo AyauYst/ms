@@ -42,5 +42,7 @@ Route::group(['middleware'=>'student'], function()
 
 Route::group(['middleware'=>'teacher'], function()
 {
-    Route::get('/teacher', 'HomeController@index');
+    Route::get('/teacher', 'Teacher\MainTeacherController@index');
+    
+    Route::get('/teacher/lesson', 'Teacher\MainTeacherController@lesson');
 });

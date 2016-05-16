@@ -9,6 +9,9 @@
 
                 <div class="panel-body">
                     {{Auth::user()->role_id}}
+                    @if(Auth::user()->role_id == 3)
+                        <p>Teacher Test Panel</p>
+                    @endif
                 </div>
             </div>
         </div>

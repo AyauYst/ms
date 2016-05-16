@@ -1,7 +1,6 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Best
- * Date: 16.05.2016
- * Time: 16:17
- */
+
+{{ dd($students) }}
+
+@for($i = 0; $i<count($students); $i++)
+    <p>{!! $students[$i] !!}</p>
+@endfor

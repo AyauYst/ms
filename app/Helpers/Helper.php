@@ -17,6 +17,7 @@ class Helper
             ->with('attrs', $attrs);
     }
 
+    //Shedule
     public static function getUsefulShedule($GID)
     {
         $UsefulShedule = [];
@@ -52,7 +53,6 @@ class Helper
         }
         return $UsefulShedule;
     }
-
     public static function WeekDaysTable4CreateShedule($GID, $ErrorMSG = null)
     {
         $subjects = Subject::GetSubjects();
@@ -82,7 +82,6 @@ class Helper
             ->with('periods', self::getPeriodsArr($GID))
             ->with('ErrorMSG', $ErrorMSG);
     }
-
     public static function WeekDaysTable4ShowShedule($GID, $selectMode = false, $ErrorMSG = null)
     {
         $SHEDULE = self::getUsefulShedule($GID);
@@ -122,7 +121,6 @@ class Helper
             ->with('shedule_id', S_Shedule::getActualSSID($GID))
             ->with('ErrorMSG', $ErrorMSG);
     }
-
     private static function getPeriodsArr($GID)
     {
         $periods = Periods::getPeriods(Group::getStudyForm($GID));
@@ -139,8 +137,16 @@ class Helper
     }
 
 
-
+    //Menu
     public static function AdminMenu(){ return view('_helpers.menu.AdminMenu'); }
     public static function StudentMenu(){ return view('_helpers.menu.StudentMenu'); }
     public static function TeacherMenu(){ return view('_helpers.menu.TeacherMenu'); }
+    
+    
+    //Lesson
+    public static function BuildCurrentLessonCheckView($group_id, $subj_id)
+    {
+        //dd(\App\Models\Student::getStudentsByGroupId($group_id));
+        return view('_helpers.LessonCheck')->with('students', \App\Models\Student::getStudentsByGroupId($group_id));
+    }
 }

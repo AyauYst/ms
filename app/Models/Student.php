@@ -18,4 +18,10 @@ class Student extends Model
         return self::where('id', '=', $id)->Where('role_id','=',2)->firstOrFail();
       
     }
+
+    public static function getStudentsByGroupId($group_id)
+    {
+        $students_id_arr[] = Group_Student::getStudentsByGroupId($group_id);
+        return self::whereIn('id', $students_id_arr)->value('name');
+    }
 }
