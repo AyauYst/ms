@@ -71,6 +71,7 @@ class AuthController extends Controller
         ]);
     }
 
+    
     public function redirectPath()
     {
         if(Auth::user()->role_id==1) $this->redirectTo ='/admin';

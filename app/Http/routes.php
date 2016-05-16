@@ -17,39 +17,29 @@ Route::get('/', function () {
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
-
 
 Route::group(['middleware'=>'admin'], function()
 {
     //заменить
     Route::get('/admin', 'HomeController@index');
     
-
     Route::resource('/admin/students', 'Admin\StudentsController');
 
-    Route::resource('/admin/teachers', 'Admin\TeachersController');
-
-    Route::get('/admin/teachers/{index}','Admin\AdminController@delete');
-
+    Route::resource('/admin/teachers', 'Admin\TeachersController');//
     Route::resource('/admin/shedule', 'Admin\SheduleController');
     
-
     Route::post('admin/shedule4SelectedGroup/{GID}', 'Admin\AdminController@ShowShedule');
     Route::post('admin/shedule/getData4CreateShedule/{GID}', 'Admin\AdminController@data4CreateShedule');
 });
 
 
-Route::group(['middleware'=>'admin'], function()
+Route::group(['middleware'=>'student'], function()
 {
-
     Route::get('/student', 'HomeController@index');
-
 });
 
 Route::group(['middleware'=>'teacher'], function()
 {
-
     Route::get('/teacher', 'HomeController@index');
-
 });
+
