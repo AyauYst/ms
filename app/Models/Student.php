@@ -19,9 +19,15 @@ class Student extends Model
       
     }
 
-    public static function getStudentsByGroupId($group_id)
+    public static function getStudentsNamesByGroupId($group_id)
     {
-        $students_id_arr[] = Group_Student::getStudentsByGroupId($group_id);
-        return self::whereIn('id', $students_id_arr)->value('name');
+        $students = Group_Student::getStudentsByGroupId($group_id);
+        return self::whereIn('id', $students)->pluck('name');
+    }
+
+    public static function getStudentsIDXByGroupId($group_id)
+    {
+        $students = Group_Student::getStudentsByGroupId($group_id);
+        return self::whereIn('id', $students)->pluck('id');
     }
 }

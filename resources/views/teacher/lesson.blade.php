@@ -7,26 +7,10 @@
     <div class="container">
         <h1>Current Lesson</h1>
 
-        {!! Helper::BuildCurrentLessonCheckView(1, null) !!}
-        <div class="panel panel-default">
-            <div class="panel-heading">GroupName, Subject</div>
-
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label for="LessonTheme">Enter Lesson Theme:</label>
-                        <input type="text" class="form-control" id="LessonTheme" name="LessonTheme" value="{{old('LessonTheme')}}" placeholder="Enter Lesson Theme">
-                        <div>{{ $errors->first('LessonTheme')}}</div>
-                    </div>
-                </div>
-            </div>
-
-            <table class="table">
-                SomeTableData
-            </table>
-
-            <div class="panel-footer">Footer</div>
-        </div>
+        <form method="post" action={{url('/teacher/LessonCheck')}} id="LessonCheck">
+            {{csrf_field()}}
+            {!! Helper::BuildCurrentLessonCheckView( $group_id, $subj_id, $lesNum, old()) !!}
+        </form>
 
     </div>
 @stop

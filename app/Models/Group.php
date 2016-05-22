@@ -17,4 +17,9 @@ class Group extends Model
     {
         return self::where('id','=',$group_id)->value('study_form_id');
     }
+
+    public static  function GetGroupNameByID($group_id)
+    {
+        return self::where('id', '=', $group_id)->value('name');
+    }
 }

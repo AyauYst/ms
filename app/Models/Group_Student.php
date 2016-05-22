@@ -17,6 +17,6 @@ class Group_Student extends Model
     
     public static function getStudentsByGroupId($group_id)
     {
-        return self::where('group_id', '=', $group_id)->value('student_id');
+        return self::where('group_id', '=', $group_id)->pluck('student_id');
     }
 }

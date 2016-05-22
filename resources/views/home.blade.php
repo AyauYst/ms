@@ -8,9 +8,12 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
+                    @if(isset($msg))
+                        {{$msg}}
+                    @endif
                     {{Auth::user()->role_id}}
                     @if(Auth::user()->role_id == 3)
-                        <p>Teacher Test Panel</p>
+                        <input type="time" value="{!! date('H:i') !!}"}>
                     @endif
                 </div>
             </div>

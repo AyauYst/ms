@@ -42,6 +42,11 @@ Route::group(['middleware'=>'teacher'], function()
 {
     Route::get('/teacher', 'Teacher\MainTeacherController@index');
     
-    Route::get('/teacher/lesson', 'Teacher\MainTeacherController@lesson');
+    Route::get('/teacher/shedule', 'Teacher\MainTeacherController@shedule');
+    Route::get('/teacher/stat_vis_groups', 'Teacher\MainTeacherController@StatVisGroups');
+    Route::get('/teacher/stat_prog_groups', 'Teacher\MainTeacherController@StatProgGroups');
+    
+    Route::get('/teacher/lesson/{groupId}/{subjectId}', 'Teacher\MainTeacherController@lesson');
+    Route::post('/teacher/LessonCheck', 'Teacher\MainTeacherController@LessonCheck');
 });
 

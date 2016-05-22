@@ -13,5 +13,9 @@ class Subjects_Teacher extends Model
     {
         return self::all();
     }
-    
+
+    public static function getSubjectsByTeacherId($t_id)
+    {
+        return self::where('user_id', '=', $t_id)->pluck('subject_id');
+    }
 }

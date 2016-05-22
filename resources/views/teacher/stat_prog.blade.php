@@ -1,7 +1,12 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Best
- * Date: 22.05.2016
- * Time: 16:57
- */
+@extends('layouts.app')
+
+@section('pageTitle', 'Groups Progress Statistics')
+
+
+@section('content')
+    <div class="container">
+        <h1>Groups Progress Statistics</h1>
+
+
+    </div>
+@stop

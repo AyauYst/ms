@@ -16,6 +16,8 @@ class CreateJurnalTable extends Migration
             $table->increments('id');
             $table->integer('student_id');
             $table->integer('subject_id');
+            $table->integer('lesson_number');
+            $table->integer('lesson_theme_id');
             $table->dateTime('date');
             $table->integer('class_works');
             $table->boolean('home_works');

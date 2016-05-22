@@ -1,7 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Best
- * Date: 18.05.2016
- * Time: 1:32
- */
+<input value="{{$value}}" type="text" name={{$name}}
+    @foreach($attr as $key => $value)
+        {!! "$key=$value" !!}
+    @endforeach
+>

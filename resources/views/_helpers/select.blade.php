@@ -9,7 +9,7 @@
     @endif
 
     @foreach($options as $option)
-        @if($selected === $option['id'])
+        @if($selected == $option['id'])
             <option value="{{$option['id']}}" selected>{{$option['name']}}</option>
         @else
             <option value="{{$option['id']}}">{{$option['name']}}</option>

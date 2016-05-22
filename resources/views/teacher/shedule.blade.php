@@ -1,7 +1,12 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Best
- * Date: 22.05.2016
- * Time: 16:53
- */
+@extends('layouts.app')
+
+@section('pageTitle', 'My Shedule')
+
+
+@section('content')
+    <div class="container">
+        <h1>My Shedule</h1>
+
+
+    </div>
+@stop

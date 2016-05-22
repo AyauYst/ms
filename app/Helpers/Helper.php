@@ -1,13 +1,16 @@
 <?php
 
 use \App\Models\Subject;
+use \App\Models\Student;
 use \App\Models\Shedule;
 use \App\Models\S_Shedule;
 use \App\Models\Periods;
 use \App\Models\Group;
+use \App\Models\Jurnal;
 
 class Helper
 {
+    //controls
     public static function select($options = [], $selected = 1, $first_option = '', $attrs = [])
     {
         return view('_helpers.select')
@@ -16,6 +19,21 @@ class Helper
             ->with('first_option',$first_option)
             ->with('attrs', $attrs);
     }
+    public static function table($headers = [], $content = [], $attr = [])
+    {
+        return view('_helpers.table')
+            ->with('headers', $headers)
+            ->with('content', $content)
+            ->with('attr', $attr);
+    }
+    public static function textInput($name, $attr = [], $value="")
+    {
+        return view('_helpers.textInput')
+            ->with('name',$name)
+            ->with('attr', $attr)
+            ->with('value', $value);
+    }
+
 
     //Shedule
     public static function getUsefulShedule($GID)
@@ -144,9 +162,63 @@ class Helper
     
     
     //Lesson
-    public static function BuildCurrentLessonCheckView($group_id, $subj_id)
+    public static function BuildCurrentLessonCheckView($group_id, $subj_id, $lesNum,  $old = null)
     {
-        //dd(\App\Models\Student::getStudentsByGroupId($group_id));
-        return view('_helpers.LessonCheck')->with('students', \App\Models\Student::getStudentsByGroupId($group_id));
+        return view('_helpers.LessonCheck')
+            ->with('group_id', $group_id)
+            ->with('subject_id', $subj_id)
+            
+            ->with('groupName', Group::GetGroupNameByID($group_id))
+            ->with('subject', Subject::getSubject($subj_id))
+            ->with('lesNum', $lesNum)
+            ->with('students', Student::getStudentsNamesByGroupId($group_id))
+            ->with('students_idx', Student::getStudentsIDXByGroupId($group_id))
+            ->with('oldValues', $old);
     }
+    public static function MarkSelectorsWithCorrectNames($string_arr, $commonNamePart, $oldValues)
+    {
+        $SELECTORS = [];
+        for($i=0;$i<count($string_arr);$i++)
+        {
+            $SELECTORS[] = Helper::select(
+                [
+                    ['id'=>1, 'name'=>'1'],
+                    ['id'=>2, 'name'=>'2'],
+                    ['id'=>3, 'name'=>'3'],
+                    ['id'=>4, 'name'=>'4'],
+                    ['id'=>5, 'name'=>'5']
+                ],
+                isset($oldValues[$string_arr[$i]])?$oldValues[$string_arr[$i]]:null,
+                '-',
+                ['class'=>"form-control", 'name'=>"$commonNamePart|$string_arr[$i]"]);
+        }
+        //dd($oldValues, $SELECTORS);
+        return $SELECTORS;
+    }
+    public static function CommentInputsWithCorrectNames($string_arr, $commonNamePart, $attrs, $oldValues)
+    {
+        $INPUTS = [];
+        for($i=0;$i<count($string_arr);$i++)
+        {
+            $INPUTS[] = Helper::textInput("$commonNamePart|$string_arr[$i]", $attrs,
+                isset($oldValues[$string_arr[$i]])?$oldValues[$string_arr[$i]]:"");
+        }
+        return $INPUTS;
+    }
+    public static function PresenceRadioBtnGroupS($students, $oldValues)
+    {
+        $RadioBtnGroupS = [];
+        for($i=0;$i<count($students);$i++)
+            $RadioBtnGroupS[] = Helper::PRBG($students[$i], isset($oldValues[$students[$i]])?$oldValues[$students[$i]]:null);
+        return $RadioBtnGroupS;
+    }
+    private static function PRBG($string, $old)
+    {
+        return view('_helpers.PresenceRadBtnGroup')
+            ->with('student',$string)
+            ->with('old',$old);
+    }
+    
+    
+    
 }
