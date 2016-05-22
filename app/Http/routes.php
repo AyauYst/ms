@@ -25,9 +25,7 @@ Route::group(['middleware'=>'admin'], function()
     
     Route::resource('/admin/students', 'Admin\StudentsController');
     Route::resource('/admin/teachers', 'Admin\TeachersController');
-
     Route::get('/admin/teachers/{index}','Admin\AdminController@delete');
-    
     Route::resource('/admin/shedule', 'Admin\SheduleController');
     
     Route::post('admin/shedule4SelectedGroup/{GID}', 'Admin\AdminController@ShowShedule');
@@ -46,3 +44,4 @@ Route::group(['middleware'=>'teacher'], function()
     
     Route::get('/teacher/lesson', 'Teacher\MainTeacherController@lesson');
 });
+
