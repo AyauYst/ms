@@ -29,11 +29,10 @@ class Student extends Model
     {
         $students = Group_Student::getStudentsByGroupId($group_id);
         return self::whereIn('id', $students)->pluck('id');
-
-        public
-        function deleteById($id)
+    }
+        public function deleteById($id)
         {
             return self::destroy($id);
         }
     }
-}
+
