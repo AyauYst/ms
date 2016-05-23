@@ -105,7 +105,7 @@ class StudentsController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50|alpha',
-            'email' => 'required|email|unique:users',
+            'email' => 'required',
             'password' => 'required|min:6',
             'group_id'=> 'required'
         ]);
