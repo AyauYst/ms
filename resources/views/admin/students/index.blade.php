@@ -14,7 +14,7 @@
                         </div>
                         <div class="col-md-2 text-right">
                             <a href="{{route('admin.students.edit',$student->id)}}">  <i class="fa fa-edit" style="font-size:24px"></i></a>
-                            <a href="{{route('admin.students.index',$student->id)}}">  <i class="fa fa-remove" style="font-size:24px;color:red"></i></a>
+                            <a href="{{ url('admin/students/delete',$student->id)}}">  <i class="fa fa-remove" style="font-size:24px;color:red"></i></a>
                         </div>
                     </div>
                     <div class="panel-body">

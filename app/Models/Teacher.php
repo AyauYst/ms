@@ -19,6 +19,6 @@ class Teacher extends Model
     }
     public static function deleteById($id)
     {
-        return self::where('id', '=', $id)->delete();
+        return self::destroy($id);
     }
 }

@@ -33,6 +33,9 @@ Route::group(['middleware'=>'admin'], function()
     
     Route::post('admin/shedule4SelectedGroup/{GID}', 'Admin\AdminController@ShowShedule');
     Route::post('admin/shedule/getData4CreateShedule/{GID}', 'Admin\AdminController@data4CreateShedule');
+
+    Route::get('/admin/teachers/delete/{id}', 'Admin\AdminController@delete');
+    Route::get('/admin/students/delete/{id}', 'Admin\AdminController@deleteStudent');
 });
 
 

@@ -45,7 +45,7 @@ class StudentsController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50|alpha',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
+            'password' => 'required|min:6|confirmed',
             'group_id'=> 'required'
         ]);
 
@@ -65,7 +65,7 @@ class StudentsController extends Controller
         $group->group_id = $request->input('group_id');
         $group->save();
 
-        return redirect(route('admin.students.create'));
+        return redirect(route('admin.students.index'));
     }
 
     /**
@@ -105,7 +105,7 @@ class StudentsController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50|alpha',
-            'email' => 'required|email|unique:users',
+            'email' => 'required',
             'password' => 'required|min:6',
             'group_id'=> 'required'
         ]);
