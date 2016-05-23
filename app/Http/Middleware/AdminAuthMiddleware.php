@@ -23,8 +23,6 @@ class AdminAuthMiddleware
                 return redirect()->guest('login');
             }
         }
-
-
         return $next($request);
     }
 }

@@ -17,4 +17,5 @@ class Subject extends Model
     {
         return self::where('id', '=', $SID)->value('name');
     }
+
 }

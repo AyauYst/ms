@@ -18,4 +18,8 @@ class Student extends Model
         return self::where('id', '=', $id)->Where('role_id','=',2)->firstOrFail();
       
     }
+    public static function deleteById($id)
+    {
+        return self::destroy($id);
+    }
 }

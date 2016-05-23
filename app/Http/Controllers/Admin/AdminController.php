@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 
+use App\Models\Student;
+use App\Models\Teacher;
 use Helper;
 
 use Illuminate\Http\Request;
@@ -14,9 +16,16 @@ class AdminController extends Controller
 {
     public function delete($id)
     {
+
         Teacher::deleteById($id);
         return view('admin/teachers.index')->with('users', Teacher::getTeachers());
 
+    }
+
+    public function deleteStudent($id)
+    {
+        Student::deleteById($id);
+        return view('admin/students.index')->with('users', Student::getStudents());
     }
 
     public function data4CreateShedule($GID)

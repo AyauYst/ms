@@ -41,6 +41,7 @@ $(function ()
 
 function D_BTN_Click()
 {
+
     document.getElementById('QueryForm').setAttribute('action', document.getElementById('DeleteLink').getAttribute('href'));
     document.getElementById('METHOD').setAttribute('value', 'DELETE');
     document.forms["QueryForm"].submit();

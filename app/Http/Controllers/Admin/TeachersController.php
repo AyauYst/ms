@@ -48,8 +48,7 @@ class TeachersController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50|alpha',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-         // 'con_password' => 'required|min:6',
+            'password' => 'required|min:6|confirmed',
             'subject_id'=> 'required'
         ]);
 
@@ -68,7 +67,7 @@ class TeachersController extends Controller
         $subjects_Teacher->user_id=$teacher->id;
         $subjects_Teacher->save();
 
-        return redirect(route('admin.teachers.create'));
+        return redirect(route('admin.teachers.index'));
 
     }
 
@@ -109,7 +108,6 @@ class TeachersController extends Controller
             'name' => 'required|max:50|alpha',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
-            // 'con_password' => 'required|min:6',
             'subject_id'=> 'required'
         ]);
 
