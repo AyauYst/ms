@@ -7,6 +7,8 @@ use \App\Models\S_Shedule;
 use \App\Models\Periods;
 use \App\Models\Group;
 use \App\Models\Jurnal;
+use \App\Models\Subjects_Teacher;
+use \App\Models\Group_Student;
 
 class Helper
 {
@@ -19,12 +21,13 @@ class Helper
             ->with('first_option',$first_option)
             ->with('attrs', $attrs);
     }
-    public static function table($headers = [], $content = [], $attr = [])
+    public static function table($headers = [], $rowId = [], $content = [], $attr = [], $cellSize = [])
     {
         return view('_helpers.table')
             ->with('headers', $headers)
+            ->with('rowId', $rowId)
             ->with('content', $content)
-            ->with('attr', $attr);
+            ->with('attr', $attr)->with('cellSize', $cellSize);
     }
     public static function textInput($name, $attr = [], $value="")
     {
@@ -219,6 +222,132 @@ class Helper
             ->with('old',$old);
     }
     
+
+    public static function TeachersShedule($user_id)
+    {
+        /*
+         * ++список моих предметов
+         * ++ищем в расписании групп свои предметы -> запоминием группу, смену, день, номер урока, предмет
+         */
+        $subj_idx = [];
+        //$subj_idx = Subjects_Teacher::getSubjectsByTeacherId($user_id);
+        foreach (Subjects_Teacher::getSubjectsByTeacherId($user_id) as $s_id)
+            $subj_idx[] = $s_id;
+
+        $groups = Group::GetGroups();
+
+        $heap = ['1'=>[],'2'=>[],'3'=>[],'4'=>[],'5'=>[],'6'=>[],'7'=>[]];
+        foreach ($groups as $group)
+        {
+            $shedule = Shedule::getShedule(S_Shedule::getActualSSID($group->id))
+                ->wherein('subject_id', $subj_idx);
+
+            foreach ($shedule as $sh)
+            {
+
+                $heap[$sh->day_id]
+                [
+                Periods::where('study_form_id','=', $group->study_form_id)
+                    ->where('lesson_number','=',$sh->lesson_number)->value('id')-1
+                ]
+                    = view('_helpers.teachersSheduleCell')
+                    ->with('groupName',$group->name)
+                    ->with('subject',Subject::getSubject($sh->subject_id));
+
+                /*
+                switch ($sh->day_id)
+                {
+                    case 1:
+                    {
+                        $heap['mon']
+                        [
+                            Periods::where('study_form_id','=', $group->study_form_id)
+                                ->where('lesson_number','=',$sh->lesson_number)->value('id')-1
+                        ]
+                            = view('_helpers.teachersSheduleCell')
+                                ->with('groupName',$group->name)
+                                ->with('subject',Subject::getSubject($sh->subject_id));
+                        break;
+                    }
+                    case 2:
+                    {
+                        $heap['thu']
+                        [
+                        Periods::where('study_form_id','=', $group->study_form_id)
+                            ->where('lesson_number','=',$sh->lesson_number)->value('id')-1
+                        ]
+                            = view('_helpers.teachersSheduleCell')
+                            ->with('groupName',$group->name)
+                            ->with('subject',Subject::getSubject($sh->subject_id));
+                        break;
+                    }
+                }
+                */
+                /*echo $sh->day_id." "
+                    .$sh->lesson_number
+                    ." ".$group->name
+                    ."(".$group->study_form_id
+                    .") ".Subject::getSubject($sh->subject_id)
+                    .'<br>';*/
+            }
+        }
+
+        $periods = [];
+        foreach (Periods::all() as $period)
+        {
+            $periodStr = date_format(new DateTime($period->start_time), 'H:i')." - ".
+                date_format(new DateTime($period->end_time), 'H:i');
+            $periods[] = $periodStr;
+        }
+        $TBL = self::table(
+            ['№','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+            $periods,
+            [
+                ['repeat'=>false, 'column_cont'=>$heap[1]],
+                ['repeat'=>false, 'column_cont'=>$heap[2]],
+                ['repeat'=>false, 'column_cont'=>$heap[3]],
+                ['repeat'=>false, 'column_cont'=>$heap[4]],
+                ['repeat'=>false, 'column_cont'=>$heap[5]],
+                ['repeat'=>false, 'column_cont'=>$heap[6]],
+                ['repeat'=>false, 'column_cont'=>$heap[7]]
+            ],
+            ['class'=>"table table-bordered"],[120,60]);
+
+        //dd($heap);
+        return $TBL;
+    }
     
     
+    
+    public static function testVisStat()
+    {
+        $statData = [];
+        foreach (Group::GetGroups() as $group)
+        {
+            $visPC = Jurnal::getGroupVisitsPercent($group->id);
+            $statData[] = 
+            [
+                "$group->name",  $visPC//abs(rand(0,5)+(1/rand(1,5))-(1/rand(1,5)))
+            ];
+        }
+        
+        return view('_helpers.testStat')
+            ->with('statData', $statData);
+    }
+    
+    public static function testProgStat()
+    {
+        $statData = [];
+        foreach (Group::GetGroups() as $group)
+        {
+            $progPC = Jurnal::getGroupProgressPercent($group->id);
+            $statData[] =
+                [
+                    "$group->name",  $progPC//abs(rand(0,5)+(1/rand(1,5))-(1/rand(1,5)))
+                ];
+        }
+
+        return view('_helpers.testStat')
+            ->with('statData', $statData);
+    }
 }

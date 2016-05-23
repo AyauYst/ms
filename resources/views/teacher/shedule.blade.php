@@ -7,6 +7,7 @@
     <div class="container">
         <h1>My Shedule</h1>
 
+        {!! Helper::TeachersShedule($myId) !!}
 
     </div>
 @stop

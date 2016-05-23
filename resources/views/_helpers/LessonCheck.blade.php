@@ -20,6 +20,7 @@
     }
 
 ?>
+
 <div class="panel panel-default">
     <div class="panel-heading text-center">Group:{{$groupName}}(Lesson:{{$subject}})</div>
 
@@ -42,9 +43,9 @@
         </div>
     </div>
 
-
     {!! Helper::table(
-                ['Student FIO', 'Missing|Present', 'Home work', 'Class work', 'Comment'],
+                ['№','Student FIO', 'Missing|Present', 'Home work', 'Class work', 'Comment'],
+                null,
                 [
                     ['repeat'=>false, 'column_cont'=>$students],
                     [

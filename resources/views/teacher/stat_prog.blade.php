@@ -7,6 +7,7 @@
     <div class="container">
         <h1>Groups Progress Statistics</h1>
 
+        {!! Helper::testProgStat() !!}
 
     </div>
 @stop

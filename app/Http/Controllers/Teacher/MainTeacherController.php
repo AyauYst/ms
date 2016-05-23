@@ -35,6 +35,7 @@ class MainTeacherController extends Controller
     //переход на страницу проведения занятия
     public function lesson($groupId, $subjectId)
     {
+        //return view('teacher.lesson')->with('group_id',1) ->with('subj_id',10)->with('lesNum',0);//для теста
         $valid = $this->VALIDATION();
         if($valid == false)
         {

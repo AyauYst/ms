@@ -11,10 +11,6 @@
                     @if(isset($msg))
                         {{$msg}}
                     @endif
-                    {{Auth::user()->role_id}}
-                    @if(Auth::user()->role_id == 3)
-                        <input type="time" value="{!! date('H:i') !!}"}>
-                    @endif
                 </div>
             </div>
         </div>

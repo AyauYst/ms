@@ -26,35 +26,35 @@
                 $ROWS = count($content[$i]['column_cont']);
         }
     }
-
-    $ROW_NUMS = array_search('№', $headers);
 ?>
 
+<style>
+    td{
+        @if(isset($cellSize[0]) && isset($cellSize[1]))
+            width: {{$cellSize[0]}}px;
+            height: {{$cellSize[1]}}px;
+        @endif
+    }
+</style>
 
-<table
+
+
+<table class="table"
         @foreach($attr as $key => $value)
-            {{ "$key = $value " }}
+            {!! "$key=$value" !!}
         @endforeach
 >
     @if(count($headers)!=0)
         <tr class="text-center">
-            @if(is_numeric($ROW_NUMS))
-                <td>{{$headers[$ROW_NUMS]}}</td>
-            @else
-                <td></td>
-            @endif
-
             @for($h_idx=0; $h_idx<count($headers); $h_idx++)
-                @if($h_idx !== $ROW_NUMS)
-                    <td>{{$headers[$h_idx]}}</td>
-                @endif
+                <td>{{$headers[$h_idx]}}</td>
             @endfor
         </tr>
     @endif
 
     @for($r_idx=0; $r_idx<$ROWS; $r_idx++)
         <tr class="text-center">
-            <td>{{$r_idx+1}}</td>
+            <td>{{$r_idx+1}} <br> {{$rowId[$r_idx]}}</td>
             @for($c_idx=0; $c_idx<$COLS; $c_idx++)
                 @if($content[$c_idx]['repeat'])
                     <td>{!! $content[$c_idx]['column_cont'] or null !!}</td>

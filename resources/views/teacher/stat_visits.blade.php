@@ -7,6 +7,7 @@
     <div class="container">
         <h1>Groups Visits Statistics</h1>
 
+        {!! Helper::testVisStat() !!}
 
     </div>
 @stop

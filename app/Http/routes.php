@@ -11,8 +11,12 @@
 |
 */
 
+
 Route::get('/', function () {
-    return view('welcome');
+    if(!Auth::check())
+        return view('auth.login');
+    else
+        return redirect()->back();
 });
 
 Route::auth();
@@ -20,7 +24,6 @@ Route::auth();
 
 Route::group(['middleware'=>'admin'], function()
 {
-    //заменить
     Route::get('/admin', 'HomeController@index');
     
     Route::resource('/admin/students', 'Admin\StudentsController');
